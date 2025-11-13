@@ -1,6 +1,3 @@
-Berikut adalah **`README.md`** lengkap untuk bagian **15: More With View Classes** dari tutorial Pyramid. Kamu tinggal salin dan tempel saja ke file `README.md` di proyekmu:
-
-````markdown
 # Pyramid Quick Tutorial — 15: More With View Classes
 
 ## Deskripsi Singkat  
@@ -20,9 +17,8 @@ Dengan demikian, struktur kode menjadi lebih terorganisir, lebih DRY (Don’t Re
    cp -r templating more_view_classes
    cd more_view_classes
    $VENV/bin/pip install -e .
-````
 
-([Pylons Project Documentation][1])
+
 2. Ubah konfigurasi route di `more_view_classes/tutorial/__init__.py` menjadi seperti berikut:
 
 ```python
@@ -206,9 +202,9 @@ class TutorialViews:
 
 ## Output yang Diharapkan
 
-![alt text](image.png)
+![alt text](image-2.png)
 
-![alt text](image-1.png)
+![alt text](image-3.png)
 
 * Saat membuka `http://localhost:6543/` → muncul halaman *Home View* dengan judul “TutorialViews – Home View” dan link ke form.
 * Klik link ke `/howdy/jane/doe` → muncul halaman *Hello View* dengan teks “Welcome, jane doe” dan form yang memiliki dua tombol: *Save* dan *Delete*.
@@ -216,3 +212,5 @@ class TutorialViews:
 * Submit form dan klik *Delete* → diarahkan ke halaman *Delete View* (judul “TutorialViews – Delete View”). Di console server seharusnya muncul output `Deleted`.
 * Semua test unit dan functional harus lulus.
 
+
+````
