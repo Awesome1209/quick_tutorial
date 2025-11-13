@@ -5,6 +5,8 @@ Pada langkah ini kita akan belajar bagaimana menghasilkan HTML melalui *templati
 Dengan pendekatan ini, view hanya mengembalikan data (dictionary) dan template yang bertugas untuk menghasilkan HTML. Ini meningkatkan pemisahan antara logika aplikasi dan tampilan HTML.
 
 ## Output
+<img width="1412" height="116" alt="image" src="https://github.com/user-attachments/assets/44ba889f-63c4-44de-a139-357a819df867" />
+
 <img width="2560" height="646" alt="image" src="https://github.com/user-attachments/assets/f44098bf-7d30-431d-988f-fa7df71173f2" />
 
 ## Tujuan  
