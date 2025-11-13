@@ -6,6 +6,9 @@ Unit test memastikan bahwa fungsi dan komponen kecil dari aplikasi bekerja sebag
 
 Pyramid menyediakan modul `pyramid.testing` yang memudahkan pengujian tanpa perlu menjalankan server HTTP sungguhan.
 
+## Output
+<img width="1419" height="105" alt="image" src="https://github.com/user-attachments/assets/602ccda5-9adf-4afb-8a6a-3ced9dd57933" />
+
 ---
 
 ## 🎯 Tujuan Pembelajaran
@@ -26,12 +29,15 @@ Kemudian salin folder tersebut agar kita bisa lanjut dari situ tanpa mengubah as
 cd ..
 cp -r debugtoolbar unit_testing
 cd unit_testing
+````
+
+---
 
 ### 2️⃣ Struktur Awal Folder
+
 Setelah disalin, struktur proyek akan tampak seperti ini:
 
-arduino
-Copy code
+```
 unit_testing/
 │
 ├── development.ini
@@ -41,11 +47,15 @@ unit_testing/
     ├── views.py
     ├── static/
     └── templates/
-### 3️⃣ Tambahkan Dependensi pytest ke setup.py
-Edit file setup.py agar mendukung pengujian menggunakan pytest.
+```
 
-python
-Copy code
+---
+
+### 3️⃣ Tambahkan Dependensi `pytest` ke setup.py
+
+Edit file `setup.py` agar mendukung pengujian menggunakan `pytest`.
+
+```python
 from setuptools import setup
 
 requires = [
@@ -70,41 +80,53 @@ setup(
         ],
     },
 )
-Penjelasan:
+```
 
-install_requires → dependensi utama aplikasi.
+**Penjelasan:**
 
-extras_require → dependensi tambahan untuk pengembangan (di sini: pytest dan pyramid_debugtoolbar).
+* `install_requires` → dependensi utama aplikasi.
+* `extras_require` → dependensi tambahan untuk pengembangan (di sini: `pytest` dan `pyramid_debugtoolbar`).
 
-4️⃣ Instalasi Proyek dalam Mode Development
+---
+
+### 4️⃣ Instalasi Proyek dalam Mode Development
+
 Gunakan virtual environment dari proyek Pyramid-mu, lalu jalankan:
 
-bash
-Copy code
+```bash
 $VENV/bin/pip install -e ".[dev]"
-Outputnya akan kurang lebih seperti ini:
+```
 
-perl
-Copy code
+**Output yang diharapkan:**
+
+```
 Obtaining file:///path/to/unit_testing
 Installing collected packages: pytest, pyramid_debugtoolbar
 Successfully installed pyramid_debugtoolbar pytest tutorial
-5️⃣ Kode Utama Aplikasi (views.py)
-Pastikan file tutorial/views.py berisi view hello_world seperti berikut:
+```
 
-python
-Copy code
+---
+
+### 5️⃣ Kode Utama Aplikasi (`views.py`)
+
+Pastikan file `tutorial/views.py` berisi view `hello_world` seperti berikut:
+
+```python
 from pyramid.response import Response
 from pyramid.view import view_config
 
 @view_config(route_name='hello', renderer='json')
 def hello_world(request):
     return Response(body=b"Hello World", content_type='text/plain')
-6️⃣ Konfigurasi Aplikasi (tutorial/init.py)
-Pastikan file tutorial/__init__.py masih sama seperti sebelumnya:
+```
 
-python
-Copy code
+---
+
+### 6️⃣ Konfigurasi Aplikasi (`tutorial/__init__.py`)
+
+Pastikan file `tutorial/__init__.py` masih sama seperti sebelumnya:
+
+```python
 from pyramid.config import Configurator
 from pyramid.response import Response
 
@@ -116,11 +138,15 @@ def main(global_config, **settings):
         config.add_route('hello', '/')
         config.add_view(hello_world, route_name='hello')
         return config.make_wsgi_app()
-7️⃣ Buat File Tes tutorial/tests.py
-Sekarang buat file baru bernama tests.py di dalam folder tutorial/ dengan isi berikut:
+```
 
-python
-Copy code
+---
+
+### 7️⃣ Buat File Tes (`tutorial/tests.py`)
+
+Sekarang buat file baru bernama `tests.py` di dalam folder `tutorial/` dengan isi berikut:
+
+```python
 import unittest
 from pyramid import testing
 
@@ -145,90 +171,105 @@ class TutorialViewTests(unittest.TestCase):
 
         # Tes tambahan: pastikan teks "Hello World" ada di body response
         self.assertIn(b"Hello World", response.body)
-Penjelasan:
+```
 
-testing.setUp() → Membuat environment konfigurasi Pyramid tiruan.
+**Penjelasan:**
 
-DummyRequest() → Membuat request palsu untuk simulasi HTTP request.
+* `testing.setUp()` → Membuat environment konfigurasi Pyramid tiruan.
+* `DummyRequest()` → Membuat request palsu untuk simulasi HTTP request.
+* `hello_world()` → View yang diuji.
+* `assertEqual` dan `assertIn` → Memverifikasi hasil sesuai ekspektasi.
 
-hello_world() → View yang diuji.
+---
 
-assertEqual dan assertIn → Memverifikasi hasil sesuai ekspektasi.
+### 8️⃣ Jalankan Tes
 
-8️⃣ Jalankan Tes
-Sekarang jalankan pengujian menggunakan pytest:
+Sekarang jalankan pengujian menggunakan `pytest`:
 
-bash
-Copy code
+```bash
 $VENV/bin/pytest tutorial/tests.py -q
-Output yang diharapkan:
+```
 
-Copy code
+**Output yang diharapkan:**
+
+```
 .
 1 passed in 0.14 seconds
+```
+
 Artinya semua tes berhasil dijalankan ✅
 
-🧠 Analisis Lengkap
-🔹 Konsep Unit Testing
+---
+
+## 🧠 Analisis Lengkap
+
+### 🔹 Konsep Unit Testing
+
 Unit testing berfokus pada pengujian komponen terkecil dari aplikasi (fungsi, method, atau kelas) secara terpisah.
 Dengan melakukan ini, kita bisa:
 
-Menemukan bug lebih cepat.
+* Menemukan bug lebih cepat.
+* Mengurangi risiko error setelah refactor.
+* Meningkatkan kepercayaan diri dalam pengembangan.
 
-Mengurangi risiko error setelah refactor.
+---
 
-Meningkatkan kepercayaan diri dalam pengembangan.
+### 🔹 Menggunakan `pyramid.testing`
 
-🔹 Menggunakan pyramid.testing
 Modul ini menyediakan alat bantu khusus untuk testing aplikasi Pyramid tanpa harus menjalankan server.
 Beberapa fitur penting:
 
-testing.setUp() → menyiapkan environment konfigurasi sementara.
+* `testing.setUp()` → menyiapkan environment konfigurasi sementara.
+* `testing.tearDown()` → membersihkan setelah pengujian selesai.
+* `DummyRequest()` → membuat request tiruan agar view bisa diuji langsung.
 
-testing.tearDown() → membersihkan setelah pengujian selesai.
+---
 
-DummyRequest() → membuat request tiruan agar view bisa diuji langsung.
+### 🔹 Kelebihan `pytest`
 
-🔹 Kelebihan pytest
-Dibandingkan dengan unittest bawaan Python, pytest menawarkan:
+Dibandingkan dengan `unittest` bawaan Python, `pytest` menawarkan:
 
-Output hasil yang lebih informatif dan berwarna.
+* Output hasil yang lebih informatif dan berwarna.
+* Tidak perlu banyak boilerplate kode.
+* Mendukung plugin (misalnya coverage).
+* Bisa menjalankan `unittest.TestCase` tanpa modifikasi.
 
-Tidak perlu banyak boilerplate kode.
+---
 
-Mendukung plugin (misalnya coverage).
+### 🔹 Hasil yang Diharapkan
 
-Bisa menjalankan unittest.TestCase tanpa modifikasi.
-
-🔹 Hasil yang Diharapkan
 Setelah menjalankan tes:
 
-bash
-Copy code
+```bash
 $VENV/bin/pytest tutorial/tests.py -q
+```
+
 Kamu akan melihat output seperti:
 
-Copy code
+```
 .
 1 passed in 0.14 seconds
-📋 Makna hasil:
+```
 
-. → menandakan satu tes dijalankan.
+📋 **Makna hasil:**
 
-1 passed → semua tes sukses.
-
-0.14 seconds → waktu eksekusi.
+* `.` → menandakan satu tes dijalankan.
+* `1 passed` → semua tes sukses.
+* `0.14 seconds` → waktu eksekusi.
 
 Jika terjadi error, pytest akan menampilkan rincian traceback yang jelas, misalnya:
 
-yaml
-Copy code
+```
 E   AssertionError: 404 != 200
+```
+
 Menunjukkan bahwa view tidak mengembalikan status 200 seperti yang diharapkan.
 
-🧾 Struktur Akhir Proyek
-arduino
-Copy code
+---
+
+## 🧾 Struktur Akhir Proyek
+
+```
 unit_testing/
 │
 ├── setup.py
@@ -239,18 +280,35 @@ unit_testing/
     ├── tests.py
     ├── templates/
     └── static/
-🧩 Kesimpulan
+```
+
+---
+
+## 🧩 Kesimpulan
+
 Pada bagian ini kamu telah belajar bagaimana:
-✅ Menambahkan pytest ke proyek Pyramid.
+✅ Menambahkan `pytest` ke proyek Pyramid.
 ✅ Membuat file pengujian untuk view sederhana.
 ✅ Menjalankan dan menganalisis hasil tes.
-✅ Menggunakan pyramid.testing dan DummyRequest untuk simulasi request.
+✅ Menggunakan `pyramid.testing` dan `DummyRequest` untuk simulasi request.
 
 Testing adalah komponen penting dalam siklus hidup perangkat lunak modern.
 Dengan menulis tes secara rutin, kita dapat menjaga aplikasi tetap stabil meskipun terjadi banyak perubahan pada kode.
 
-🚀 Langkah Berikutnya
+---
+
+## 🚀 Langkah Berikutnya
+
 Setelah memahami unit testing, kamu bisa lanjut ke:
 
-06: Functional Testing
-Di mana kamu akan mempelajari cara menguji keseluruhan aplikasi Pyramid dari perspektif pengguna.
+> **06: Functional Testing**
+> Di mana kamu akan mempelajari cara menguji keseluruhan aplikasi Pyramid dari perspektif pengguna.
+
+---
+
+```
+
+---
+
+💡 **Langsung copy semua isi di atas ke file `README.md`** dalam folder `unit_testing/` — dan file dokumentasimu akan lengkap, rapi, dan siap dipakai 🚀
+```
