@@ -6,6 +6,8 @@ Pada langkah ini kita akan memindahkan definisi view-function ke modul `views.py
 Kita akan membuat dua view: satu untuk route `'home'` (`/`) dan satu untuk route `'hello'` (`/howdy`).  
 
 ## Output
+<img width="1400" height="108" alt="image" src="https://github.com/user-attachments/assets/ca0bae15-2102-4746-803f-83c639e78f6a" />
+
 <img width="2560" height="570" alt="image" src="https://github.com/user-attachments/assets/e4e829c8-33a9-4197-84a0-b34aaa10080a" />
 
 ## Tujuan  
