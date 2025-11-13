@@ -1,102 +1,107 @@
-## 🗂️ Struktur Proyek
-
-* `/01_hello_world`: Aplikasi "Hello World!" file tunggal.
-
+# 🐍 Single-File Web Application dengan Pyramid
 ## Output
-<img width="837" height="491" alt="image" src="https://github.com/user-attachments/assets/12c41d65-c31f-4d21-8fe4-bdfb9d305397" />
+<img width="837" height="491" alt="image" src="https://github.com/user-attachments/assets/06a3494b-0ba1-42f6-ab01-9741554abc1f" />
+---
+
+## 📘 Deskripsi Singkat
+Proyek ini menunjukkan cara membuat **aplikasi web sederhana berbasis Pyramid** hanya dalam **satu file Python**.  
+Pendekatan ini cocok bagi pemula yang ingin memahami dasar Pyramid sebelum membuat aplikasi berskala besar.  
+Contoh ini diadaptasi dari dokumentasi resmi Pyramid:  
+🔗 [https://docs.pylonsproject.org/projects/pyramid/en/latest/quick_tutorial/hello_world.html](https://docs.pylonsproject.org/projects/pyramid/en/latest/quick_tutorial/hello_world.html)
 
 ---
 
-## 🚀 Panduan Menjalankan (Windows PowerShell)
+## ⚙️ Langkah-Langkah Instalasi dan Eksekusi
 
-Panduan ini berasumsi Anda menggunakan **PowerShell** di Windows, dan *virtual environment* Anda bernama `env`.
+### 1️⃣ Persiapan Lingkungan
+Pastikan Python dan pip sudah terinstal, kemudian pasang *dependencies* berikut:
+```bash
+pip install "pyramid==2.0" waitress
+```
 
-### 1. Pengaturan Awal (Hanya Dilakukan Sekali)
+### 2️⃣ Buat Struktur Proyek
+Buat folder kerja baru dan masuk ke dalamnya:
+```bash
+mkdir hello_world
+cd hello_world
+```
 
-1.  **Buka Terminal di Root Proyek**
-    Buka PowerShell Anda di folder `C:\projects\quick_tutorial`.
+### 3️⃣ Buat File `app.py`
+Buat satu file bernama `app.py` dan isi dengan kode berikut:
 
-2.  **Buat Virtual Environment (Jika Belum Ada)**
-    Jika folder `env` belum ada, jalankan:
-    ```powershell
-    python -m venv env
-    ```
+```python
+from waitress import serve
+from pyramid.config import Configurator
+from pyramid.response import Response
 
-3.  **Aktifkan Virtual Environment**
-    Setiap kali Anda membuka terminal **baru** untuk proyek ini, Anda harus mengaktifkan `env` Anda:
-    ```powershell
-    .\env\Scripts\Activate.ps1
-    ```
-    *Prompt* Anda akan berubah dan menampilkan `(env)` di depannya.
+def hello_world(request):
+    print('Incoming request')
+    return Response('<body><h1>Hello World!</h1></body>')
 
-4.  **Instal Dependensi Inti**
-    Setelah `(env)` aktif, instal Pyramid dan dependensi lainnya:
-    ```bash
-    pip install "pyramid<2.0" jinja2
-    ```
+if __name__ == '__main__':
+    with Configurator() as config:
+        config.add_route('hello', '/')
+        config.add_view(hello_world, route_name='hello')
+        app = config.make_wsgi_app()
+    serve(app, host='0.0.0.0', port=6543)
+```
 
----
+### 4️⃣ Jalankan Aplikasi
+Jalankan server menggunakan:
+```bash
+python app.py
+```
 
-### 2. Menjalankan Setiap Langkah Tutorial
-
-Untuk setiap folder (misalnya `02_package`, `03_ini`, dst.), prosesnya hampir selalu sama:
-
-1.  **Pastikan `(env)` Anda Aktif.**
-    Jika tidak, jalankan `.\env\Scripts\Activate.ps1` dari folder root.
-
-2.  **Masuk ke Folder Langkah (Contoh: 03_ini)**
-    ```powershell
-    cd 03_ini
-    ```
-
-3.  **Instal Proyek (Mode Editable)**
-    Langkah ini "menghubungkan" kode di folder ini ke `env` Anda. **Ini wajib** untuk sebagian besar langkah (mulai dari 02 ke atas) agar `import` dan `pserve` berfungsi.
-    ```bash
-    # (env) PS C:\...\03_ini>
-    pip install -e .
-    ```
-
-4.  **Jalankan Server Aplikasi**
-    Sebagian besar tutorial (dari langkah 03 ke atas) dijalankan menggunakan `pserve`:
-    ```bash
-    # (env) PS C:\...\03_ini>
-    pserve development.ini --reload
-    ```
-    Server akan berjalan di `http://localhost:6543`.
-
-> **Pengecualian Langkah 01:**
-> Untuk `01_hello_world`, Anda tidak perlu `pip install`. Anda cukup menjalankannya dengan:
-> ```bash
-> (env) PS C:\...\01_hello_world> python app.py
-> ```
+### 5️⃣ Akses di Browser
+Buka browser dan kunjungi:
+```
+http://localhost:6543/
+```
 
 ---
 
-### 3. 🧪 Menjalankan Tes (Langkah 05 & 06)
+## 🧠 Analisis Kode
+Beberapa bagian penting dari aplikasi ini:
 
-Untuk menjalankan tes pada folder `05_unit_testing` atau `06_functional_testing`:
+| Bagian Kode | Penjelasan |
+|--------------|-------------|
+| `from waitress import serve` | Menggunakan **Waitress**, server WSGI ringan untuk menjalankan aplikasi. |
+| `Configurator()` | Objek utama Pyramid untuk mendaftarkan *route* dan *view*. |
+| `config.add_route('hello', '/')` | Menentukan rute URL `/` agar diarahkan ke fungsi `hello_world`. |
+| `config.add_view(hello_world, route_name='hello')` | Menghubungkan rute `'hello'` dengan fungsi view yang menangani respon. |
+| `Response('<body><h1>Hello World!</h1></body>')` | Mengembalikan HTML sederhana ke klien. |
+| `serve(app, host='0.0.0.0', port=6543)` | Menjalankan aplikasi pada alamat lokal port 6543. |
 
-1.  **Pastikan `(env)` Anda Aktif.**
+Kode ini bekerja tanpa konfigurasi tambahan, karena semua komponen (routing, view, dan response) didefinisikan langsung di dalam satu file.
 
-2.  **Masuk ke Folder Tes**
-    ```powershell
-    cd 05_unit_testing
-    ```
+---
 
-3.  **Instal Proyek dengan Dependensi "Testing"**
-    Ini akan menginstal `pytest` dan dependensi tes lainnya yang ditentukan di `setup.py`.
-    ```bash
-    # (env) PS C:\...\05_unit_testing>
-    pip install -e ".[testing]"
-    ```
+## 🧩 Alur Eksekusi
+1. Saat file dijalankan, blok `if __name__ == '__main__':` akan membuat konfigurasi Pyramid.  
+2. Pyramid mendaftarkan route `'/'` ke fungsi `hello_world`.  
+3. Waitress menjalankan aplikasi di port 6543.  
+4. Ketika browser mengakses `http://localhost:6543/`, fungsi `hello_world()` dipanggil, mencetak `"Incoming request"` di terminal, dan mengirim HTML sebagai respon ke browser.
 
-4.  **Jalankan `pytest`**
-    * Cara standar adalah dengan mengetik `pytest`:
-        ```bash
-        pytest
-        ```
-    * **PENTING:** Jika `pytest` melaporkan `collected 0 items`, itu karena nama file Anda adalah `tutorial/tests.py` (bukan `test_*.py`). Dalam kasus ini, jalankan `pytest` dengan menunjuk file secara spesifik:
-        ```bash
-        # Ini adalah perintah yang benar untuk file tes Anda
-        pytest tutorial/tests.py -q
-        ```
+---
+
+## 🖥️ Output yang Diharapkan
+
+### Di Browser:
+Menampilkan halaman sederhana berisi:
+```html
+<h1>Hello World!</h1>
+```
+
+### Di Terminal:
+Menampilkan log seperti:
+```
+Incoming request
+```
+
+---
+
+## 🧾 Kesimpulan
+Contoh **Single-File Web Application** ini menunjukkan betapa mudahnya membangun aplikasi web dasar menggunakan Pyramid.  
+Dengan hanya beberapa baris kode, Anda sudah memiliki server web penuh yang bisa dikembangkan menjadi aplikasi REST API, sistem template, atau situs dinamis di masa depan.
+
+---
