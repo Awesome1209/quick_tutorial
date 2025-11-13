@@ -1,7 +1,7 @@
 # 04: Easier Development with `debugtoolbar`
 
 ## Output
-<img width="638" height="372" alt="image" src="https://github.com/user-attachments/assets/69ca1537-23fc-4d1d-b9a4-d7e4a0d98326" />
+<img width="2068" height="630" alt="image" src="https://github.com/user-attachments/assets/2726657e-bc4c-44b4-b349-163f2ae93682" />
 
 ## Deskripsi Singkat  
 Pada langkah ini kita akan menambahkan add-on pyramid_debugtoolbar ke aplikasi Pyramid kita untuk memudahkan pengembangan dan debugging. Toolbar ini akan muncul pada antarmuka aplikasi di browser, menyediakan berbagai alat introspeksi dan penanganan kesalahan yang interaktif. Dari dokumentasi:  
