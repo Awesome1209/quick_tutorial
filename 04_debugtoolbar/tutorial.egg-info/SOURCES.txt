@@ -1,6 +1,4 @@
 setup.py
-tutorial/__init__.py
-tutorial/app.py
 tutorial.egg-info/PKG-INFO
 tutorial.egg-info/SOURCES.txt
 tutorial.egg-info/dependency_links.txt
