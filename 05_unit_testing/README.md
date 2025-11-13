@@ -26,7 +26,8 @@ Kemudian salin folder tersebut agar kita bisa lanjut dari situ tanpa mengubah as
 cd ..
 cp -r debugtoolbar unit_testing
 cd unit_testing
-2️⃣ Struktur Awal Folder
+
+### 2️⃣ Struktur Awal Folder
 Setelah disalin, struktur proyek akan tampak seperti ini:
 
 arduino
@@ -40,7 +41,7 @@ unit_testing/
     ├── views.py
     ├── static/
     └── templates/
-3️⃣ Tambahkan Dependensi pytest ke setup.py
+### 3️⃣ Tambahkan Dependensi pytest ke setup.py
 Edit file setup.py agar mendukung pengujian menggunakan pytest.
 
 python
