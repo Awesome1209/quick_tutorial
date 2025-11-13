@@ -1,6 +1,3 @@
-Berikut adalah **`README.md`** lengkap untuk bagian **15: More With View Classes** dari tutorial Pyramid. Kamu tinggal salin dan tempel saja ke file `README.md` di proyekmu:
-
-````markdown
 # Pyramid Quick Tutorial — 15: More With View Classes
 
 ## Deskripsi Singkat  
